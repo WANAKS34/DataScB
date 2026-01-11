@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 
-# ------------------ Page Config ------------------
+
 st.set_page_config(
     page_title="Analyze your Data",
     page_icon="📚",
@@ -14,7 +14,7 @@ st.set_page_config(
 st.title("📚 Analyze Your Data")
 st.write("Upload a **CSV** or **Excel** file to explore your data interactively")
 
-# ------------------ File Upload ------------------
+
 uploaded_file = st.file_uploader(
     "Upload a CSV or Excel file",
     type=["csv", "xlsx"]
@@ -38,11 +38,11 @@ if uploaded_file is not None:
 
     st.success("✅ File uploaded successfully")
 
-    # ------------------ Preview ------------------
+    
     st.subheader("👓 Data Preview")
     st.dataframe(data.head(50), use_container_width=True)
 
-    # ------------------ Data Overview ------------------
+    
     st.subheader("📊 Data Overview")
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Rows", data.shape[0])
@@ -50,13 +50,13 @@ if uploaded_file is not None:
     c3.metric("Missing Values", data.isnull().sum().sum())
     c4.metric("Duplicate Rows", data.duplicated().sum())
 
-    # ------------------ Dataset Info ------------------
+    
     st.subheader("🗃️ Dataset Info")
     buffer = io.StringIO()
     data.info(buf=buffer)
     st.text(buffer.getvalue())
 
-    # ------------------ Statistical Summary ------------------
+    
     st.subheader("📈 Statistical Summary (Numerical)")
     numeric_cols = data.select_dtypes(include=np.number).columns.tolist()
 
@@ -74,7 +74,7 @@ if uploaded_file is not None:
             use_container_width=True
         )
 
-    # ------------------ Column Selection ------------------
+    
     st.subheader("✂️ Select Columns for Analysis")
     selected_columns = st.multiselect("Choose columns", data.columns)
 
@@ -84,7 +84,7 @@ if uploaded_file is not None:
         st.info("No columns selected. Showing full dataset.")
         st.dataframe(data.head(), use_container_width=True)
 
-    # ------------------ Visualizations ------------------
+    
     st.subheader("📊 Data Visualization")
 
     if numeric_cols:
@@ -161,3 +161,4 @@ if uploaded_file is not None:
 
 else:
     st.info("👆 Upload a CSV or Excel file to get started")
+
